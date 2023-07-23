@@ -1,0 +1,25 @@
+nodes:
+  - _target_: neuro_key.pos_taggers.spacy_pos_tagger.SpacyPOSTagger
+    config:
+      _target_: neuro_key.pos_taggers.spacy_pos_tagger.SpacyPOSTaggerConfig
+      model_name_or_path: de_core_news_sm
+
+  - _target_: neuro_key.vectorizers.sentence_transformer_vectorizer.SentenceTransformerVectorizer
+    config:
+      _target_: neuro_key.vectorizers.sentence_transformer_vectorizer.SentenceTransformerVectorizerConfig
+      model_name_or_path: sentence-transformers/distiluse-base-multilingual-cased-v1
+      embedding_field: keyphrase_candidates_embeddings
+      content_field: keyphrase_candidates
+
+  - _target_: neuro_key.vectorizers.sentence_transformer_vectorizer.SentenceTransformerVectorizer
+    config:
+      _target_: neuro_key.vectorizers.sentence_transformer_vectorizer.SentenceTransformerVectorizerConfig
+      model_name_or_path: sentence-transformers/distiluse-base-multilingual-cased-v1
+      embedding_field: embedding
+      content_field: text
+
+  - _target_: neuro_key.rankers.mmr_ranker.MMRRanker
+    config:
+      _target_: neuro_key.rankers.mmr_ranker.MMRRankerConfig
+      diversity: 0.1
+      top_n: 20
